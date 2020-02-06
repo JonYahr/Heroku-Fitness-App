@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/minty/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Jon++</a>
+  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="navbar-collapse collapse" id="navbarColor01" style="">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/home">Exercise</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/history">History</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/progress">Progress</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-12 col-md-4 text-left"> 
+      
+      	
+			
+		<form action="#" th:action="@{/home}" th:object="${exercise}" method="post">
+		    
+		    <table class="table">
+	      		<tr>
+	      			<th colspan="2" style="text-align:center">
+						<h1>Log an Exercise</h1>
+					</th>
+				</tr>
+				<tr>
+					<td>
+						Exercise Name: 
+					</td>
+					<td>
+						<input list="exerciseNames" th:field="*{exerciseName}" />
+						<datalist id="exerciseNames">
+						    <option value="Push-up">
+						    <option value="Pull-up">
+						    <option value="Squats">
+						    <option value="Deadlift">
+						    <option value="Shoulder Press">
+						</datalist>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Sets: 
+					</td>
+					<td>
+						<input type="number" step="1" th:field="*{sets}" style="width: auto"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Reps: 
+					</td>
+					<td>
+						<input type="number" step="1" th:field="*{reps}" style="width: auto"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Weight: 
+					</td>
+					<td>
+						<input type="number" step="1" th:field="*{weight}" style="width: auto"/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+					<td style="text-align: right;">
+						<input class="btn btn-outline-primary" type="submit" value="Submit" />
+					</td>
+				</tr>
+				
+				
+		    </table>
+		</form>
+		
+		<br>
+		<br>
+		
+		<h3 style="text-align:center">Today's Completed Exercises</h3>
+		<table class="table">
+			<tr>
+				<th>
+					Exercise
+				</th>
+				<th>
+					Sets
+				</th>
+				<th>
+					Reps
+				</th>
+				<th>
+					Weight
+				</th>
+				<th>
+				</th>
+			<tr>
+			<tr th:each="exerciseObject: ${exerciseListToday}">                
+			    <td th:text="${exerciseObject.exerciseName}" />
+			    <td th:text="${exerciseObject.sets}" />
+			    <td th:text="${exerciseObject.reps}" />
+			    <td th:text="${exerciseObject.weight}" />
+			    <td> 
+			    	<a th:href="@{'/deleteExercise/' + ${exerciseObject.exerciseId}}" onclick="return confirm('Are you sure you want to delete this exercise?');" class="btn btn-outline-secondary">Delete</a>
+				</td>
+			</tr>
+		</table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
